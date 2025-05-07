@@ -5,6 +5,7 @@ import br.com.ms.conta.Conta;
 import br.com.ms.conta.dto.ContaDto;
 import br.com.ms.conta.repository.ContaRepository;
 import br.com.ms.conta.service.utils.ContaServiceUtils;
+import br.com.ms.endereco.Endereco;
 import br.com.ms.utils.service.DtoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -43,6 +44,7 @@ public class ContaServiceImpl implements ContaService{
         conta.setId(null);
 
         List<Cartao> cartoes = new ArrayList<>();
+        List<Endereco> enderecos = new ArrayList<>();
 
         if(!dto.getCartoes().isEmpty()){
             dto.getCartoes().forEach(cartaoDto -> {
@@ -57,7 +59,26 @@ public class ContaServiceImpl implements ContaService{
             });
         }
 
+        if(!dto.getEnderecos().isEmpty()){
+            dto.getEnderecos().forEach(enderecoDto -> {
+                Endereco endereco = new Endereco();
+                endereco.setConta(conta);
+                endereco.setEmail(conta.getEmail());
+                endereco.setCep(enderecoDto.getCep());
+                endereco.setPais(enderecoDto.getPais());
+                endereco.setEstado(enderecoDto.getEstado());
+                endereco.setCidade(enderecoDto.getCidade());
+                endereco.setLogradouro(enderecoDto.getLogradouro());
+                endereco.setBairro(enderecoDto.getBairro());
+                endereco.setNumero(enderecoDto.getNumero());
+                endereco.setComplemento(enderecoDto.getComplemento());
+
+                enderecos.add(endereco);
+            });
+        }
+
         conta.setCartoes(cartoes);
+        conta.setEnderecos(enderecos);
 
         Conta contaPersistida = this.contaRepository.save(conta);
         return DtoService.entityToDto(contaPersistida, ContaDto.Response.Conta.class);

@@ -2,6 +2,8 @@ package br.com.ms.conta;
 
 import br.com.ms.cartao.Cartao;
 import br.com.ms.cartao.dto.CartaoDto;
+import br.com.ms.endereco.Endereco;
+import br.com.ms.endereco.dto.EnderecoDto;
 import br.com.ms.utils.service.DtoService;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -45,6 +47,9 @@ public class Conta {
     @OneToMany(mappedBy = "conta", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Cartao> cartoes;
 
+    @OneToMany(mappedBy = "conta", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Endereco> enderecos;
+
     @CreationTimestamp
     private LocalDateTime dataCriacao;
 
@@ -56,6 +61,7 @@ public class Conta {
                 ", nome='" + nome + '\'' +
                 ", cpf='" + cpf + '\'' +
                 ", cartoes=" + DtoService.entitysToDtos(cartoes, CartaoDto.Response.Cartao.class) +
+                ", enderecos=" + DtoService.entitysToDtos(enderecos, EnderecoDto.Response.Endereco.class) +
                 ", dataCriacao=" + dataCriacao +
                 '}';
     }

@@ -1,7 +1,5 @@
-package br.com.ms.conta.dto;
+package br.com.ms.endereco.dto;
 
-import br.com.ms.cartao.dto.CartaoDto;
-import br.com.ms.endereco.dto.EnderecoDto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -14,24 +12,14 @@ import java.util.UUID;
 import static br.com.ms.utils.constants.MensagensConstants.NAO_NULO;
 import static br.com.ms.utils.constants.MensagensConstants.NAO_NULO_BRANCO;
 
-public class ContaDto {
+public class EnderecoDto {
 
     public enum Request{;
 
         @Data
-        public static class Cartao{
-            @NotNull(message = NAO_NULO_BRANCO)
-            private String nome;
-            @NotNull(message = NAO_NULO_BRANCO)
-            private String numero;
-            @NotNull(message = NAO_NULO_BRANCO)
-            private String dataValidade;
-            @NotNull(message = NAO_NULO_BRANCO)
-            private String CVV;
-        }
-
-        @Data
         public static class Endereco {
+            @NotBlank(message = NAO_NULO_BRANCO)
+            private String contaId;
             @NotBlank(message = NAO_NULO_BRANCO)
             private String logradouro;
             @NotNull(message = NAO_NULO)
@@ -49,34 +37,46 @@ public class ContaDto {
             @NotBlank(message = NAO_NULO_BRANCO)
             private String pais;
         }
-
-        @Data
-        @JsonInclude(JsonInclude.Include.NON_NULL)
-        public static class Conta{
-            @NotNull(message = NAO_NULO_BRANCO)
-            private String email;
-            @NotNull(message = NAO_NULO_BRANCO)
-            private String nome;
-            @NotNull(message = NAO_NULO_BRANCO)
-            private String cpf;
-            private List<ContaDto.Request.Cartao> cartoes;
-            private List<ContaDto.Request.Endereco> enderecos;
-        }
     }
 
     public enum Response{;
 
         @Data
-        @JsonInclude(JsonInclude.Include.NON_NULL)
-        public static class Conta{
+        public static class Base {
             private UUID id;
-            private String email;
-            private String nome;
-            private String cpf;
-            private List<CartaoDto.Response.Cartao> cartoes;
-            private List<EnderecoDto.Response.Endereco> enderecos;
+            private String logradouro;
+            private Integer numero;
+            private String complemento;
+            private String bairro;
+            private String cidade;
+            private String estado;
+            private String cep;
+            private String pais;
             private LocalDateTime dataCriacao;
+            private LocalDateTime dataAtualizacao;
         }
 
+        @Data
+        @JsonInclude(JsonInclude.Include.NON_NULL)
+        public static class Endereco {
+            private UUID id;
+            private String email;
+            private String logradouro;
+            private Integer numero;
+            private String complemento;
+            private String bairro;
+            private String cidade;
+            private String estado;
+            private String cep;
+            private String pais;
+            private LocalDateTime dataCriacao;
+            private LocalDateTime dataAtualizacao;
+        }
+
+        @Data
+        public static class Enderecos {
+            private String email;
+            private List<Base> enderecos;
+        }
     }
 }

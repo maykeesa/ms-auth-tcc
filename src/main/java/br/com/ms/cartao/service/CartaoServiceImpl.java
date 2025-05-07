@@ -8,6 +8,7 @@ import br.com.ms.conta.Conta;
 import br.com.ms.conta.dto.ContaDto;
 import br.com.ms.conta.service.utils.ContaServiceUtils;
 import br.com.ms.utils.service.DtoService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -16,6 +17,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 import java.util.UUID;
+
+import static br.com.ms.config.exception.enums.MensagensException.ENTIDADE_NAO_ENCONTRADA;
 
 @Service
 public class CartaoServiceImpl implements CartaoService{
@@ -49,5 +52,13 @@ public class CartaoServiceImpl implements CartaoService{
 
         Cartao cartaoPersistido = this.cartaoRepository.save(cartao);
         return DtoService.entityToDto(cartaoPersistido, CartaoDto.Response.Cartao.class);
+    }
+
+    @Override
+    public void deletar(String id) {
+        Cartao cartao = this.cartaoRepository.findById(UUID.fromString(id))
+                .orElseThrow(() -> new EntityNotFoundException(ENTIDADE_NAO_ENCONTRADA.getDescricao()));
+
+        this.cartaoRepository.delete(cartao);
     }
 }
