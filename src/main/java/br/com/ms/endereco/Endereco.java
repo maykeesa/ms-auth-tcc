@@ -58,6 +58,9 @@ public class Endereco {
     @Column(nullable = false)
     private String pais;
 
+    @Column(nullable = false)
+    private boolean padrao;
+
     @CreationTimestamp
     private LocalDateTime dataCriacao;
 

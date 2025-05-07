@@ -5,6 +5,7 @@ import br.com.ms.conta.service.utils.ContaServiceUtils;
 import br.com.ms.endereco.Endereco;
 import br.com.ms.endereco.dto.EnderecoDto;
 import br.com.ms.endereco.repository.EnderecoRepository;
+import br.com.ms.endereco.service.utils.EnderecoServiceUtils;
 import br.com.ms.utils.service.DtoService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,18 +14,18 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
 import static br.com.ms.config.exception.enums.MensagensException.ENTIDADE_NAO_ENCONTRADA;
-import static br.com.ms.config.exception.enums.MensagensException.ENTIDADE_NAO_ENCONTRADA_EMAIL;
 
 @Service
 public class EnderecoServiceImpl implements EnderecoService{
 
     @Autowired
     private ContaServiceUtils contaServiceUtils;
+    @Autowired
+    private EnderecoServiceUtils enderecoServiceUtils;
 
     @Autowired
     private EnderecoRepository enderecoRepository;
@@ -32,28 +33,13 @@ public class EnderecoServiceImpl implements EnderecoService{
     @Override
     public Object buscar(String id, String email, Pageable pageable) {
         if(Objects.nonNull(id)){
-            Endereco endereco = this.enderecoRepository.findById(UUID.fromString(id))
-                    .orElseThrow(() -> new EntityNotFoundException(ENTIDADE_NAO_ENCONTRADA.getDescricao()));
+            Endereco endereco = this.enderecoServiceUtils.buscarEndereco(id);
 
             return DtoService.entityToDto(endereco, EnderecoDto.Response.Endereco.class);
         }
 
         if(Objects.nonNull(email)){
-            List<Endereco> enderecos = this.enderecoRepository.findByEmail(email)
-                    .orElseThrow(() -> new EntityNotFoundException(ENTIDADE_NAO_ENCONTRADA.getDescricao()));
-
-            EnderecoDto.Response.Enderecos response = new EnderecoDto.Response.Enderecos();
-            List<EnderecoDto.Response.Base> enderecosDto =
-                    DtoService.entitysToDtos(enderecos, EnderecoDto.Response.Base.class);
-
-            if(enderecos.isEmpty()){
-                throw new EntityNotFoundException(ENTIDADE_NAO_ENCONTRADA_EMAIL.getDescricao());
-            }
-
-            response.setEmail(enderecos.get(0).getEmail());
-            response.setEnderecos(enderecosDto);
-
-            return response;
+            return this.enderecoServiceUtils.buscarEnderecoPorEmail(email);
         }
 
         Page<Endereco> enderecos = this.enderecoRepository.findAll(pageable);

@@ -20,14 +20,16 @@ public class ContaDto {
 
         @Data
         public static class Cartao{
-            @NotNull(message = NAO_NULO_BRANCO)
+            @NotBlank(message = NAO_NULO_BRANCO)
             private String nome;
-            @NotNull(message = NAO_NULO_BRANCO)
+            @NotBlank(message = NAO_NULO_BRANCO)
             private String numero;
-            @NotNull(message = NAO_NULO_BRANCO)
+            @NotBlank(message = NAO_NULO_BRANCO)
             private String dataValidade;
-            @NotNull(message = NAO_NULO_BRANCO)
+            @NotBlank(message = NAO_NULO_BRANCO)
             private String CVV;
+            @NotNull(message = NAO_NULO)
+            private boolean padrao;
         }
 
         @Data
@@ -48,16 +50,18 @@ public class ContaDto {
             private String cep;
             @NotBlank(message = NAO_NULO_BRANCO)
             private String pais;
+            @NotNull(message = NAO_NULO)
+            private boolean padrao;
         }
 
         @Data
         @JsonInclude(JsonInclude.Include.NON_NULL)
         public static class Conta{
-            @NotNull(message = NAO_NULO_BRANCO)
+            @NotBlank(message = NAO_NULO_BRANCO)
             private String email;
-            @NotNull(message = NAO_NULO_BRANCO)
+            @NotBlank(message = NAO_NULO_BRANCO)
             private String nome;
-            @NotNull(message = NAO_NULO_BRANCO)
+            @NotBlank(message = NAO_NULO_BRANCO)
             private String cpf;
             private List<ContaDto.Request.Cartao> cartoes;
             private List<ContaDto.Request.Endereco> enderecos;

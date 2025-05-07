@@ -32,10 +32,12 @@ public class CartaoDto {
         @Data
         public static class Cartao{
             private UUID id;
+            private UUID contaId;
             private String nome;
             private String numero;
             private String dataValidade;
             private String cvv;
+            private boolean padrao;
             private LocalDateTime dataCriacao;
         }
     }

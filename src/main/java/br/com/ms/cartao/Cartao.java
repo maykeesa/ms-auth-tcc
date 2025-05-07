@@ -46,6 +46,9 @@ public class Cartao {
     @Column(nullable = false)
     private String cvv;
 
+    @Column(nullable = false)
+    private boolean padrao;
+
     @CreationTimestamp
     private LocalDateTime dataCriacao;
 

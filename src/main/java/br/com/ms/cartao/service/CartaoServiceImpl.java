@@ -5,7 +5,6 @@ import br.com.ms.cartao.dto.CartaoDto;
 import br.com.ms.cartao.repository.CartaoRepository;
 import br.com.ms.cartao.service.utils.CartaoServiceUtils;
 import br.com.ms.conta.Conta;
-import br.com.ms.conta.dto.ContaDto;
 import br.com.ms.conta.service.utils.ContaServiceUtils;
 import br.com.ms.utils.service.DtoService;
 import jakarta.persistence.EntityNotFoundException;
@@ -35,7 +34,7 @@ public class CartaoServiceImpl implements CartaoService{
     public Object buscar(String id, Pageable pageable) {
         if(Objects.nonNull(id)){
             return DtoService.entityToDto(cartaoServiceUtils
-                    .buscarCartao(UUID.fromString(id)), ContaDto.Response.Conta.class);
+                    .buscarCartao(UUID.fromString(id)), CartaoDto.Response.Cartao.class);
         }
 
         Page<Cartao> cartoes = this.cartaoRepository.findAll(pageable);

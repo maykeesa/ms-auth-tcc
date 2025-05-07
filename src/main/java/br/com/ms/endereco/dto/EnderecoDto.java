@@ -52,6 +52,7 @@ public class EnderecoDto {
             private String estado;
             private String cep;
             private String pais;
+            private boolean padrao;
             private LocalDateTime dataCriacao;
             private LocalDateTime dataAtualizacao;
         }
@@ -69,6 +70,7 @@ public class EnderecoDto {
             private String estado;
             private String cep;
             private String pais;
+            private boolean padrao;
             private LocalDateTime dataCriacao;
             private LocalDateTime dataAtualizacao;
         }

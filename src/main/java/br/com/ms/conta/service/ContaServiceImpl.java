@@ -53,6 +53,7 @@ public class ContaServiceImpl implements ContaService{
                 cartao.setNome(cartaoDto.getNome());
                 cartao.setNumero(cartaoDto.getNumero());
                 cartao.setCvv(cartaoDto.getCVV());
+                cartao.setPadrao(cartaoDto.isPadrao());
                 cartao.setDataValidade(cartaoDto.getDataValidade());
 
                 cartoes.add(cartao);
@@ -72,6 +73,7 @@ public class ContaServiceImpl implements ContaService{
                 endereco.setBairro(enderecoDto.getBairro());
                 endereco.setNumero(enderecoDto.getNumero());
                 endereco.setComplemento(enderecoDto.getComplemento());
+                endereco.setPadrao(enderecoDto.isPadrao());
 
                 enderecos.add(endereco);
             });
