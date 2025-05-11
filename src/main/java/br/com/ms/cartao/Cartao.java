@@ -30,7 +30,7 @@ public class Cartao {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "conta_id", nullable = false)
     private Conta conta;
 
@@ -56,6 +56,7 @@ public class Cartao {
     public String toString() {
         return "Cartao{" +
                 "id=" + id +
+                ", conta='" + conta.getId() + '\'' +
                 ", nome='" + nome + '\'' +
                 ", numero='" + numero + '\'' +
                 ", dataValidade='" + dataValidade + '\'' +

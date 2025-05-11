@@ -1,10 +1,7 @@
 package br.com.ms.conta;
 
 import br.com.ms.cartao.Cartao;
-import br.com.ms.cartao.dto.CartaoDto;
 import br.com.ms.endereco.Endereco;
-import br.com.ms.endereco.dto.EnderecoDto;
-import br.com.ms.utils.service.DtoService;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -60,8 +57,6 @@ public class Conta {
                 ", email='" + email + '\'' +
                 ", nome='" + nome + '\'' +
                 ", cpf='" + cpf + '\'' +
-                ", cartoes=" + DtoService.entitysToDtos(cartoes, CartaoDto.Response.Cartao.class) +
-                ", enderecos=" + DtoService.entitysToDtos(enderecos, EnderecoDto.Response.Endereco.class) +
                 ", dataCriacao=" + dataCriacao +
                 '}';
     }

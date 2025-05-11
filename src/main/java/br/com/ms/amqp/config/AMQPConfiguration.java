@@ -3,11 +3,14 @@ package br.com.ms.amqp.config;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.support.converter.DefaultJackson2JavaTypeMapper;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.Map;
 
 @Configuration
 public class AMQPConfiguration {
@@ -34,6 +37,14 @@ public class AMQPConfiguration {
 
     @Bean
     public Jackson2JsonMessageConverter messageConverter(){
-        return new Jackson2JsonMessageConverter();
+        Jackson2JsonMessageConverter converter = new Jackson2JsonMessageConverter();
+
+        DefaultJackson2JavaTypeMapper typeMapper = new DefaultJackson2JavaTypeMapper();
+        typeMapper.setIdClassMapping(Map.of(
+                "Cartao", br.com.ms.cartao.dto.CartaoDto.Response.Cartao.class
+        ));
+
+        converter.setJavaTypeMapper(typeMapper);
+        return converter;
     }
 }
