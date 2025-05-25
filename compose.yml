@@ -3,7 +3,7 @@ services:
     build:
       context: .
     ports:
-      - "8080:8080"
+      - "8083:8080"
     environment:
       - RABBITMQ_HOST=rabbitmq-dev
       - RABBITMQ_PORT=5672
@@ -24,7 +24,7 @@ services:
     networks:
       - ms-rabbitmq
     ports:
-      - "5432:5432"
+      - "5434:5432"
 
 networks:
   ms-rabbitmq:
