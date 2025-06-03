@@ -41,7 +41,8 @@ public class AMQPConfiguration {
 
         DefaultJackson2JavaTypeMapper typeMapper = new DefaultJackson2JavaTypeMapper();
         typeMapper.setIdClassMapping(Map.of(
-                "Cartao", br.com.ms.cartao.dto.CartaoDto.Response.Cartao.class
+                "Cartao", br.com.ms.cartao.dto.CartaoDto.Response.Cartao.class,
+                "Conta", br.com.ms.conta.dto.ContaDto.Response.Conta.class
         ));
 
         converter.setJavaTypeMapper(typeMapper);
